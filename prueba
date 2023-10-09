@@ -1,0 +1,29 @@
+# Tu string de entrada
+entrada = '{4, "Mostaza"8, d14.00,i 16.00, h4}'
+
+# Inicializa las listas de elementos correctos y errores
+correctos = []
+errores = []
+
+# Separa la entrada por comas y elimina los espacios en blanco
+elementos = [e.strip() for e in entrada.split(',')]
+
+# Verifica los elementos uno por uno
+for elemento in elementos:
+    # Si es el segundo elemento, verifica que esté encerrado en comillas
+    if elemento.startswith('"') and elemento.endswith('"') and len(elemento) > 2:
+        correctos.append(elemento)
+    # Si no es el segundo elemento, verifica que sea alfanumérico o un número válido
+    else:
+        try:
+            if "." in elemento:
+                float(elemento)
+            else:
+                int(elemento)
+            correctos.append(elemento)
+        except ValueError:
+            errores.append(elemento)
+
+# Imprime los elementos correctos y los errores
+print("Elementos correctos:", correctos)
+print("Errores encontrados:", errores)
