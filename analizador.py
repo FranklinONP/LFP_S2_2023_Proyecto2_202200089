@@ -35,8 +35,8 @@ exportarReporte("Reporte HTML de abarroteria");
 @/
 
 '''
-from instrucciones import instrucciones
-from registros import registros
+from objetos.instrucciones import instrucciones
+from objetos.registros import registros
 
 global lexemas_captados,num_fila,num_col,pg,listaErrores
 pg=''
