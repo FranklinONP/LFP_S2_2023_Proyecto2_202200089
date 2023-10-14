@@ -36,6 +36,8 @@ def verificar_subgrupos(cadena):
                             venta=True
                         elif palabras_clave[i]=='stock':
                             stock=True
+        else:
+            print('No se encontro corchete de cierre')
     if codigo and produ and compra and venta and stock ==True:
         #print('True')
         return True 
