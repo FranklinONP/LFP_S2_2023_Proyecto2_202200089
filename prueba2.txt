@@ -1,0 +1,10 @@
+imprimir("Reporte? de ");
+imprimirln("Aba546464a");
+imprimirln("hfghhghgf");
+
+Claves = ["codigo", "producto", "precio_compra", "precio_venta", "stock"]
+
+
+imprimirln("Franklin Orlando Noj Perez");
+imprimirln("LFP B-");
+imprimir("2S 2023");

@@ -1,0 +1,20 @@
+INICIO -> LISTA_INSTRUCCIONES
+
+LISTA_INSTRUCCIONES -> INSTRUCCION LISTA_INSTRUCCIONES
+                    | Epsilon
+
+INSTRUCCION -> INST_CLAVES
+            | INST_REGISTROS
+            | INST_IMPRIMIR
+            | INST_IMPRIMIRLN
+            | INST_CONTEO
+            | INST_PROMEDIO
+            | INST_CONTARSI
+            | INST_DATOA
+            | INST_SUMAR
+            | INST_MAX
+            | INST_MIN
+            | INST_EXTRAERREPORTE
+
+INST_IMPRIMIR -> imprimir parena string parenc puntoycoma
+               |
