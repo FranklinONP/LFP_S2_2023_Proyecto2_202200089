@@ -9,6 +9,7 @@ class Parser:
         self.index=0
         self.printer=printer()
         self.db=BASEDATOS()
+        
     def consume(self):
         token=self.tokens[self.index]
         self.index+=1
@@ -23,8 +24,8 @@ class Parser:
                 self.imprimir()
             elif self.peek().Nombre=='IMPRIMIRLN':
                 self.imprimirln()
-            #elif self.peek().Nombre=='Claves':
-            #    self.claves()
+            elif self.peek().Nombre=='CLAVES':
+                self.claves()
             else:
                 print('Para mientras elimino lo que no son print')
                 self.consume()
@@ -69,10 +70,10 @@ class Parser:
         
     def claves(self):
         self.consume()
-        if self.consume.Nombre!='IGUAL':
+        if self.consume().Nombre!='IGUAL':
             print('Error: Se esperaba un igual')
             return
-        if self.consume().Nombre !='CORCHETE IZQUIERDO':
+        if self.consume().Nombre !='CORCHETEIZQUIERDO':
             print("Error: Se esperaba un corchete izquiedo")
             return
         #Agregar todas las claves que puedan haber
@@ -81,7 +82,7 @@ class Parser:
             return 
         valor1=self.consume().Valor
         self.db.agregarClave(valor1)
-        while self.peek().Nombre!='COMA':
+        while self.peek().Nombre=='COMA':
             self.consume() # Elimino la coma y paso al siguiente valor
             if self.peek().Nombre!='STRING':
                 print('Error: Se esperaba un valor de Clave')
