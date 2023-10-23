@@ -2,7 +2,7 @@ Claves = ["codigo", "producto", "precio_compra", "precio_venta", "stock"]
 cantada
 
 Registros = [
-    {1, "Barbacoa", 10.50, 20.00, 8}
+    {1, "Barbacoa", 10.50, 20.00, 5}
     {2, "Salsa", 13.00, 16.00, 8}
     {3, "Mayonesa", 15.00, 18.00, 8}
     {4, "Mostaza", 14.00, 16.00, 8}
@@ -14,20 +14,10 @@ Registros = [
 
 imprimirln("==============================================");
 
-imprimirln("---conteo--");
-conteo();
-
-imprimirln("---promedio--");
-promedio("stock");
-
-imprimirln("---contarsi--");
-contarsi("producto","Barbacoa");
-
-imprimirln("---sumar--");
-sumar("stock");
-
+imprimirln
 imprimirln("---max--");
-max("stock");
+max("codigo");
+imprimirln("---max---");
 
 imprimirln("---min--");
 min("stock");

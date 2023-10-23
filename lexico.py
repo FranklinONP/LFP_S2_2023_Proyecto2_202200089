@@ -18,7 +18,7 @@ Palabras_Reservadas={
     'sumar':'SUMAR',
     'max':'MAX',
     'min':'MIN',
-    'exportarReporte':'EXTRAERREPORTE',
+    'exportarReporte':'EXPORTARREPORTE',
     '(':'PARENTESISIZQUIERDO',
     ')':'PARENTESISDERECHO',
     '{':'LLAVEIZQUIERDA',

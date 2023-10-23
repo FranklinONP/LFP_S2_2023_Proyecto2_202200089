@@ -2,6 +2,20 @@
 from print import printer
 from Base_de_Datos import BASEDATOS
 
+Palabras_Reservadas={
+    'IMPRIMIR':'IMPRIMIR',
+    'CLAVES':'CLAVES',
+    'Registros':'REGISTROS',
+    'IMPRIMIRLN':'IMPRIMIRLN',
+    'conteo':'CONTEO',
+    'promedio':'PROMEDIO',
+    'contarsi':'CONTARSI',
+    'datos':'DATOS',
+    'sumar':'SUMAR',
+    'max':'MAX',
+    'min':'MIN',
+    'exportarReporte':'EXPORTARREPORTE',
+}
 
 class Parser:
     def __init__(self,tokens):
@@ -14,6 +28,9 @@ class Parser:
         token=self.tokens[self.index]
         self.index+=1
         return token
+    def regresar(self):
+        token=self.tokens[self.index]
+        self.index-=1
     
     def peek(self):
         return self.tokens[self.index]
@@ -43,6 +60,8 @@ class Parser:
                 self.max()
             elif self.peek().Nombre=='MIN':
                 self.min()
+            elif self.peek().Nombre=='EXPORTARREPORTE':
+                self.exportarReporte()
             else:
                 print('Para mientras elimino lo que no son print')
                 self.consume()
@@ -53,38 +72,64 @@ class Parser:
     #Agregar-----> agrega sin el salto de linea 
     def imprimir(self):
         self.consume()#Me va a servir para eliminar esa palabra ---imprimir---
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!="PARENTESISIZQUIERDO":
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error se esperaba un parentesis izquierdo')
             return
+        tokenn=self.peek().Nombre
         token=self.consume()
         if token.Nombre!='STRING':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error, se esperaba un string')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!="PARENTESISDERECHO":
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error se esperaba un parentesis derecho')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!="PUNTOYCOMA":
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error se esperaba un punto y coma')
             return 
         self.printer.agregar(token.Valor)
     #AgregarLinea agrega con un salto de linea
     def imprimirln(self):
         self.consume()#Me va a servir para eliminar esa palabra ---imprimirln---
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!="PARENTESISIZQUIERDO":
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error se esperaba un parentesis izquierdo')
             return
+        tokenn=self.peek().Nombre
         token=self.consume()
         if token.Nombre!='STRING':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error, se esperaba un string')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!="PARENTESISDERECHO":
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error se esperaba un parentesis derecho')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!="PUNTOYCOMA":
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error se esperaba un punto y coma')
+            tokenn=self.peek().Nombre
             return 
         self.printer.agregarLinea(token.Valor)
-        
+      
+    # Pendientes  
     def claves(self):
         self.consume()
         if self.consume().Nombre!='IGUAL':
@@ -110,6 +155,7 @@ class Parser:
             print('Error: se esperaba un corchete derecho')
             return
   
+    # Pendientes
     def registros(self):
         self.consume()#Elimina la palabra registros
         if self.consume().Nombre!='IGUAL':
@@ -148,13 +194,22 @@ class Parser:
             
     def conteo(self):
         self.consume()
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error: se esperaba un parentesis izquierdo')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISDERECHO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error: se esperaba un parentesis derecho')    
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error, se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.conteo()))
@@ -163,98 +218,211 @@ class Parser:
     #Falta que si no es numero me diga que es error
     def promedio(self):
         self.consume() #Elimino la palabra promedio
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un parentesis izquirdo')
             return
+        tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
-           print('Se esperaba una clave')
-           return
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba una clave')
+            return
+        tokenn=self.peek().Nombre
         clave=self.consume().Valor
         if self.consume().Nombre!='PARENTESISDERECHO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un parentesis derecho')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.promedio(clave)))
          
     def contarsi(self):
         self.consume() #Elimina el el token contari.si
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error: se esperaba un parentesis izquierdo')
             return
+        tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error: se esperaba un string/Clave')
             return
+        tokenn=self.peek().Nombre
         clave=self.consume().Valor
         if self.consume().Nombre!='COMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error: se esperaba una coma')
             return
+        tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING' and self.peek().Nombre!='Numero':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error: se esperaba el valor de una clave')
             return
+        tokenn=self.peek().Nombre
         valor=self.consume().Valor
         
         if self.consume().Nombre!='PARENTESISDERECHO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error: se esperaba un parentesis derecho')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Error, se esperaba un punto y coma')
             return
         #llego hasta qui entonces si existe
         self.printer.agregarLinea(str(self.db.contarsi(clave,valor)))     
     
-    #No hace nada todavia
     def datos(self):
-        pass
+        self.consume() #Elimino la palabra sumar
+        tokenn=self.peek().Nombre
+        if self.consume().Nombre!='PARENTESISIZQUIERDO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba un parentesis izquirdo')
+            return
+        tokenn=self.peek().Nombre
+        if self.consume().Nombre!='PARENTESISDERECHO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba un parentesis derecho')
+            return
+        tokenn=self.peek().Nombre
+        if self.consume().Nombre!='PUNTOYCOMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba un punto y coma')
+            return
+        self.printer.agregarLinea(str(self.db.datos())) 
     
     def sumar(self):
         self.consume() #Elimino la palabra sumar
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un parentesis izquirdo')
             return
+        tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
-           print('Se esperaba una clave')
-           return
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba una clave')
+            return
+        tokenn=self.peek().Nombre
         clave=self.consume().Valor
         if self.consume().Nombre!='PARENTESISDERECHO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un parentesis derecho')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.sumar(clave)))
         
     def max(self):
         self.consume() #Elimino la palabra sumar
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un parentesis izquirdo')
             return
+        tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
-           print('Se esperaba una clave')
-           return
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba una clave')
+            return
+        tokenn=self.peek().Nombre
         clave=self.consume().Valor
         if self.consume().Nombre!='PARENTESISDERECHO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un parentesis derecho')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.maximo(clave)))   
     
     def min(self):
         self.consume() #Elimino la palabra sumar
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un parentesis izquirdo')
             return
+        tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
-           print('Se esperaba una clave')
-           return
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba una clave')
+            return
+        tokenn=self.peek().Nombre
         clave=self.consume().Valor
         if self.consume().Nombre!='PARENTESISDERECHO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un parentesis derecho')
             return
+        tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
             print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.minimo(clave))) 
+    
+    def exportarReporte(self):
+        self.consume() #Elimino la palabra extraerReporte
+        tokenn=self.peek().Nombre
+        if self.consume().Nombre!='PARENTESISIZQUIERDO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba un parentesis izquirdo')
+            return
+        tokenn=self.peek().Nombre
+        if self.peek().Nombre!='STRING':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba una clave')
+            return
+        tokenn=self.peek().Nombre
+        titulo=self.consume().Valor
+        if self.consume().Nombre!='PARENTESISDERECHO':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba un parentesis derecho')
+            return
+        tokenn=self.peek().Nombre
+        if self.consume().Nombre!='PUNTOYCOMA':
+            if tokenn in Palabras_Reservadas:
+                self.regresar()
+            print('Se esperaba un punto y coma')
+            return
+        self.db.exportarReporte(titulo)
