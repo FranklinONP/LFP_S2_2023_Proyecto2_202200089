@@ -145,13 +145,15 @@ def extraerTokens(cadena):
                 numCol+=len(palabrita)
                 token=tokenG(Palabras_Reservadas[palabrita],palabrita,numFila,numCol)
                 tokensCaptados.append(token)
+            else:
+                print("Error sintactico: ",palabrita)
             cadena=cadena[len(palabrita):]
         elif caracter.isdigit():
             numerito,pos=armarNumero(cadena[indice:],0)
             numCol+=pos+1                               #duda///////////////////////////////////////
             #indice+=pos
             cadena=cadena[pos:]
-            token=tokenG("Number",numerito,numFila,numCol)
+            token=tokenG("Numero",numerito,numFila,numCol)
             tokensCaptados.append(token)
             
         elif caracter in Palabras_Reservadas: # Para los simbolos como, [],{},: etc, que son admitidos

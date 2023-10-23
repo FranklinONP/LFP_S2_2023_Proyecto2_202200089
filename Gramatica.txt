@@ -1,20 +1,50 @@
-INICIO -> LISTA_INSTRUCCIONES
+INICIO::= LISTA_INSTRUCCIONES
 
-LISTA_INSTRUCCIONES -> INSTRUCCION LISTA_INSTRUCCIONES
+LISTA_INSTRUCCIONES::= <INSTRUCCION> <LISTA_INSTRUCCIONES2>
                     | Epsilon
 
-INSTRUCCION -> INST_CLAVES
-            | INST_REGISTROS
-            | INST_IMPRIMIR
-            | INST_IMPRIMIRLN
-            | INST_CONTEO
-            | INST_PROMEDIO
-            | INST_CONTARSI
-            | INST_DATOA
-            | INST_SUMAR
-            | INST_MAX
-            | INST_MIN
-            | INST_EXTRAERREPORTE
+INSTRUCCION ->  INST_IMPRIMIR <INSTRUCCION>
+            | INST_IMPRIMIRLN <INSTRUCCION>
+            | Epsilon
+            <INSTRUCCIONES>
 
-INST_IMPRIMIR -> imprimir parena string parenc puntoycoma
-               |
+INSTRUCCIONES -> <INST_CLAVES> <INST_REGISTROS>  
+        
+LISTA_INSTRUCCIONES2 -> INST_CONTEO <LISTA_INSTRUCCIONES2>
+            | INST_PROMEDIO <LISTA_INSTRUCCIONES2>
+            | INST_CONTARSI <LISTA_INSTRUCCIONES2>
+            | INST_DATOS <LISTA_INSTRUCCIONES2>
+            | INST_SUMAR <LISTA_INSTRUCCIONES2>
+            | INST_MAX <LISTA_INSTRUCCIONES2>
+            | INST_MIN <LISTA_INSTRUCCIONES2>
+            | INST_EXTRAERREPORTE <LISTA_INSTRUCCIONES2>
+            | INST_IMPRIMIR <LISTA_INSTRUCCIONES2>
+            | INST_IMPRIMIRLN <LISTA_INSTRUCCIONES2>
+            | Epsilon
+
+INST_IMPRIMIR -> imprimir parentesisApetura comillas string comillas parentesisCerradura puntoycoma
+
+INST_IMPRIMIRLN -> imprimirln parentesisApetura comillas string comillas parentesisCerradura puntoycoma
+
+INST_CLAVES -> claves igual comilla corcheteApertura string CLAVES2
+
+CLAVES2-> corcheteCerradura| coma string CLAVES2
+
+INST_REGISTROS-> registros igual corcheteApertura llaveApertura valor REGISTROS2
+
+REGISTROS2-> llaveCerradura corcheteCerradura| coma valor REGISTROS2
+
+INST_PROMEDIO-> promedio parentesisApetura comillas string comilla parentesisCerradura puntoycoma
+
+INST_CONTEO-> conteo parentesisApetura parentesisCerradura puntoycoma
+
+INST_CONTARSI-> contarsi parentesisApetura puntoycoma string comilla parentesisCerradura coma numero parentesisCerradura puntoycoma
+
+INST_SUMAR-> sumar parentesisApetura comilla string comilla parentesisCerradura puntoycoma
+
+INST_MAX-> max parentesisApetura string parentesisCerradura puntoycoma
+
+INST_MIN-> min parentesisApetura string parentesisCerradura puntoycoma
+
+INST_EXTRAERREPORTE->< extraerReporte> <parentesisApetura> <string> <parentesisCerradura> <puntoycoma> 
+               
