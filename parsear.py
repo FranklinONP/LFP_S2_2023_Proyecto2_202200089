@@ -1,6 +1,8 @@
 #aqui como se construye el sintactico
 from print import printer
 from Base_de_Datos import BASEDATOS
+from Errores import Errores
+objetoError=Errores
 
 Palabras_Reservadas={
     'IMPRIMIR':'IMPRIMIR',
@@ -18,22 +20,31 @@ Palabras_Reservadas={
 }
 
 class Parser:
-    def __init__(self,tokens):
+    def __init__(self,tokens,lerrores):
         self.tokens=tokens
+        self.listaErrores=lerrores
         self.index=0
         self.printer=printer()
         self.db=BASEDATOS()
         
     def consume(self):
-        token=self.tokens[self.index]
-        self.index+=1
-        return token
+        if self.index>=len(self.tokens):
+            token=self.tokens[self.index-1]
+            return token
+        else:
+            token=self.tokens[self.index]
+            self.index+=1
+            return token
+    
     def regresar(self):
         token=self.tokens[self.index]
         self.index-=1
     
     def peek(self):
-        return self.tokens[self.index]
+        if self.index>=len(self.tokens):
+            return self.tokens[self.index-1]
+        else:
+            return self.tokens[self.index]
     
     def parse(self):
         while self.index < len(self.tokens):
@@ -65,6 +76,8 @@ class Parser:
             else:
                 print('Para mientras elimino lo que no son print')
                 self.consume()
+            if self.index == len(self.tokens):
+                reporte_html_errores(self.listaErrores)
         #Cauando ya termine de recorrer todo
         texto=self.printer.print()
         for linea in texto.split('\n'):
@@ -76,6 +89,10 @@ class Parser:
         if self.consume().Nombre!="PARENTESISIZQUIERDO":
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error se esperaba un parentesis izquierdo')
             return
         tokenn=self.peek().Nombre
@@ -83,18 +100,29 @@ class Parser:
         if token.Nombre!='STRING':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
-            print('Error, se esperaba un string')
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!="PARENTESISDERECHO":
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!="PUNTOYCOMA":
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error se esperaba un punto y coma')
             return 
         self.printer.agregar(token.Valor)
@@ -105,6 +133,10 @@ class Parser:
         if self.consume().Nombre!="PARENTESISIZQUIERDO":
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error se esperaba un parentesis izquierdo')
             return
         tokenn=self.peek().Nombre
@@ -112,18 +144,30 @@ class Parser:
         if token.Nombre!='STRING':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error, se esperaba un string')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!="PARENTESISDERECHO":
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!="PUNTOYCOMA":
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error se esperaba un punto y coma')
             tokenn=self.peek().Nombre
             return 
@@ -198,18 +242,30 @@ class Parser:
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error: se esperaba un parentesis izquierdo')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISDERECHO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error: se esperaba un parentesis derecho')    
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error, se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.conteo()))
@@ -222,12 +278,20 @@ class Parser:
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis izquirdo')
             return
         tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba una clave')
             return
         tokenn=self.peek().Nombre
@@ -235,12 +299,20 @@ class Parser:
         if self.consume().Nombre!='PARENTESISDERECHO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.promedio(clave)))
@@ -251,12 +323,20 @@ class Parser:
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error: se esperaba un parentesis izquierdo')
             return
         tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error: se esperaba un string/Clave')
             return
         tokenn=self.peek().Nombre
@@ -264,12 +344,20 @@ class Parser:
         if self.consume().Nombre!='COMA':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error: se esperaba una coma')
             return
         tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING' and self.peek().Nombre!='Numero':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error: se esperaba el valor de una clave')
             return
         tokenn=self.peek().Nombre
@@ -278,12 +366,20 @@ class Parser:
         if self.consume().Nombre!='PARENTESISDERECHO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error: se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Error, se esperaba un punto y coma')
             return
         #llego hasta qui entonces si existe
@@ -295,18 +391,30 @@ class Parser:
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis izquirdo')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISDERECHO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.datos())) 
@@ -317,12 +425,20 @@ class Parser:
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis izquirdo')
             return
         tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba una clave')
             return
         tokenn=self.peek().Nombre
@@ -330,28 +446,46 @@ class Parser:
         if self.consume().Nombre!='PARENTESISDERECHO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.sumar(clave)))
         
+        
+    #Con este empece para el manejo de errore sintacticos
     def max(self):
         self.consume() #Elimino la palabra sumar
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis izquirdo')
             return
         tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba una clave')
             return
         tokenn=self.peek().Nombre
@@ -359,13 +493,21 @@ class Parser:
         if self.consume().Nombre!='PARENTESISDERECHO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
-            print('Se esperaba un punto y coma')
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
+                print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.maximo(clave)))   
     
@@ -375,12 +517,20 @@ class Parser:
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis izquirdo')
             return
         tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba una clave')
             return
         tokenn=self.peek().Nombre
@@ -388,12 +538,20 @@ class Parser:
         if self.consume().Nombre!='PARENTESISDERECHO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un punto y coma')
             return
         self.printer.agregarLinea(str(self.db.minimo(clave))) 
@@ -404,12 +562,20 @@ class Parser:
         if self.consume().Nombre!='PARENTESISIZQUIERDO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis izquirdo')
             return
         tokenn=self.peek().Nombre
         if self.peek().Nombre!='STRING':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba una clave')
             return
         tokenn=self.peek().Nombre
@@ -417,12 +583,43 @@ class Parser:
         if self.consume().Nombre!='PARENTESISDERECHO':
             if tokenn in Palabras_Reservadas:
                 self.regresar()
+                self.regresar()
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
+                self.consume()
             print('Se esperaba un parentesis derecho')
             return
         tokenn=self.peek().Nombre
         if self.consume().Nombre!='PUNTOYCOMA':
-            if tokenn in Palabras_Reservadas:
-                self.regresar()
             print('Se esperaba un punto y coma')
             return
         self.db.exportarReporte(titulo)
+        
+def reporte_html_errores(objetos):
+    html_code = '<style>\n'
+    html_code += 'table {\n'
+    html_code += '\tborder-collapse: collapse;\n'
+    html_code += '\tmargin-left: auto;\n'
+    html_code += '\tmargin-right: auto;\n'
+    html_code += '}\n'
+    html_code += 'th, td {\n'
+    html_code += '\tpadding: 8px;\n'
+    html_code += '\tborder: 1px solid black;\n'
+    html_code += '}\n'
+    html_code += '</style>\n'
+    html_code += '\t\t<th colspan="{}">{}</th>\n'.format(4, 'Reporte de errores de Franklin Orlando Noj Perez')
+
+    html_code += '<tr><th>Caracter/token</th><th>Tipo de error</th><th>Linea</th><th>Columna</th></tr>'
+    filas = generar_filas(objetos)
+    tabla_html = f'<table style="border-collapse: collapse; width: 50%; margin: auto;"><thead>{html_code}</thead><tbody>{filas}</tbody></table>'
+    
+    with open('Reporte de errores de Franklin Noj 202200089.html', 'w') as archivo:
+        archivo.write(tabla_html)
+    
+def generar_filas(objetos):
+    filas = ''
+    for objeto in objetos:
+        fila = f'<tr><td>{objeto.Caracter_token}</td><td>{objeto.tipoError}</td><td>{objeto.Linea}</td><td>{objeto.Columna}</td></tr>'
+        filas += fila
+    return filas
+    

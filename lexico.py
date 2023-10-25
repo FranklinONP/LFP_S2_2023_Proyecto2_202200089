@@ -1,6 +1,8 @@
-from collections import namedtuple 
+from tokenGen import TokenO
+tokenG=TokenO
 
-tokenG=namedtuple("Token",['Nombre','Valor','Linea','Columna'])
+from Errores import Errores
+objetoError=Errores
 
 numFila=1
 numCol=1
@@ -66,6 +68,7 @@ def armarNumero(cadena,indice):
 def extraerTokens(cadena):
     global numCol,numFila
     tokensCaptados=[]
+    arregloErrores=[]
     indice=0
     while cadena:
         caracter=cadena[0]
@@ -146,6 +149,9 @@ def extraerTokens(cadena):
                 token=tokenG(Palabras_Reservadas[palabrita],palabrita,numFila,numCol)
                 tokensCaptados.append(token)
             else:
+                numCol+=len(palabrita)
+                error=objetoError(palabrita,'Lexico',numFila,numCol)
+                arregloErrores.append(error)
                 print("Error sintactico: ",palabrita)
             cadena=cadena[len(palabrita):]
         elif caracter.isdigit():
@@ -163,36 +169,40 @@ def extraerTokens(cadena):
             #indice+=1
             cadena=cadena[1:]
         else:
-            print(
-           'Error: caracter desconocido: {',
-           caracter,
-           "} en linea",
-           numFila+1,
-           "Columna: ",
-           numCol    
-            )
+            error=objetoError(caracter,'Lexico',numFila,numCol)
+            arregloErrores.append(error)
             #indice+=1
-            cadena=cadena
+            cadena=cadena[1:]
             numCol+=1
-    return tokensCaptados
+        if not cadena:
+            reporteTokensAnalizados(tokensCaptados) 
+    return tokensCaptados, arregloErrores
 
+def reporteTokensAnalizados(objetos):
+    html_code = '<style>\n'
+    html_code += 'table {\n'
+    html_code += '\tborder-collapse: collapse;\n'
+    html_code += '\tmargin-left: auto;\n'
+    html_code += '\tmargin-right: auto;\n'
+    html_code += '}\n'
+    html_code += 'th, td {\n'
+    html_code += '\tpadding: 8px;\n'
+    html_code += '\tborder: 1px solid black;\n'
+    html_code += '}\n'
+    html_code += '</style>\n'
+    html_code += '\t\t<th colspan="{}">{}</th>\n'.format(4, 'Reporte de tokens de Franklin Orlando Noj Perez')
 
-
-
-entrada='''Claves = ["codigo", "producto", "precio_compra", "precio_venta", "stock"]
-
-Registros = [
-    {1, "Barbacoa", 10.50, 20.00, 6}
-    {2, "Salsa", 13.00, 16.00, 7}
-    {3, "Mayonesa", 15.00, 18.00, 8}
-    {4, "Mostaza", 14.00, 16.00, 4}
-]
-
-'''
-#Para probar que recogia bien los lexemas :D
-'''
-l=extraerTokens(entrada)
-for ll in l:
-    print(ll)
+    html_code += '<tr><th>Nombre</th><th>Valor</th><th>Linea</th><th>Columna</th></tr>'
+    filas = generar_filas(objetos)
+    tabla_html = f'<table style="border-collapse: collapse; width: 50%; margin: auto;"><thead>{html_code}</thead><tbody>{filas}</tbody></table>'
     
-    '''
+    with open('Reporte de token Franklin Noj 202200089.html', 'w') as archivo:
+        archivo.write(tabla_html)
+    
+def generar_filas(objetos):
+    filas = ''
+    for objeto in objetos:
+        fila = f'<tr><td>{objeto.Nombre}</td><td>{objeto.Valor}</td><td>{objeto.Linea}</td><td>{objeto.Columna}</td></tr>'
+        filas += fila
+    return filas
+    
