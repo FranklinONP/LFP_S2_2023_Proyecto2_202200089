@@ -1,5 +1,5 @@
-from lexico import extraerTokens
-from parsear import Parser
+from analizadorLexico import extraerTokens
+from analizadorSintactico import Parser
 
 entrada=open('prueba2.txt','r').read()
 

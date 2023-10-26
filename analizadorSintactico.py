@@ -80,6 +80,9 @@ class Parser:
                 self.consume()
             if self.index == len(self.tokens):
                 reporte_html_errores(self.listaErrores)
+                texto=self.printer.print()
+                return texto
+                
         #Cauando ya termine de recorrer todo
         texto=self.printer.print()
         for linea in texto.split('\n'):

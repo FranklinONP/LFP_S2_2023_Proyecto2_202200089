@@ -4,6 +4,13 @@ from tkinter import ttk
 import webbrowser
 from tkinter import filedialog
 
+# Importo los analizadores
+from analizadorLexico import extraerTokens
+from analizadorSintactico import Parser
+
+global textoEditor
+textoEditor=''
+
 def abrir():
     file_path = filedialog.askopenfilename(filetypes=[("Archivos de texto", "*.txt"),("Archivos bizdata", "*.bizdata"), ("Archivos HTML", "*.html")])
     if file_path:
@@ -17,10 +24,18 @@ def abrir():
 
 def analizar():
     # Lógica para el botón "Analizar"
-    texto = "Texto que quieres mostrar después de presionar 'Analizar'"
+    global textoEditor
+    textoEditor= cuadro_texto.get("1.0", tk.END)
+    
+    tokens,listaErrores=extraerTokens(textoEditor)
+    
+    parser=Parser(tokens,listaErrores)
+    texto2=parser.parse()
+    cuadro_texto2.configure(state=tk.NORMAL)  # Habilitar el cuadro de texto temporalmente
     cuadro_texto2.delete('1.0', tk.END)  # Borrar el contenido actual del cuadro de texto
-    cuadro_texto2.insert(tk.END, texto)  # Insertar el nuevo texto
-
+    cuadro_texto2.insert(tk.END, texto2)  # Insertar el nuevo texto
+    cuadro_texto2.configure(state=tk.DISABLED)  # Volver a deshabilitar el cuadro de texto
+    
 def reportes():
     # Lógica para el botón "Reportes"
     pass
