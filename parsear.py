@@ -74,6 +74,8 @@ class Parser:
             elif self.peek().Nombre=='EXPORTARREPORTE':
                 self.exportarReporte()
             else:
+                error=objetoError(self.peek().Valor,'Sintactico',self.peek().Linea,self.peek().Columna)
+                self.listaErrores.append(error)
                 print('Para mientras elimino lo que no son print')
                 self.consume()
             if self.index == len(self.tokens):

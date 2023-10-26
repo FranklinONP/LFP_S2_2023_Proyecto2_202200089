@@ -11,6 +11,7 @@ numCol=1
 Palabras_Reservadas={
     'imprimir':'IMPRIMIR',
     'Claves':'CLAVES',
+    'claves':'CLAVES',
     'Registros':'REGISTROS',
     'imprimirln':'IMPRIMIRLN',
     'conteo':'CONTEO',
