@@ -12,7 +12,7 @@ global textoEditor
 textoEditor=''
 
 def abrir():
-    file_path = filedialog.askopenfilename(filetypes=[("Archivos de texto", "*.txt"),("Archivos bizdata", "*.bizdata"), ("Archivos HTML", "*.html")])
+    file_path = filedialog.askopenfilename(filetypes=[("Archivos bizdata", "*.bizdata"),("Archivos de texto", "*.txt"), ("Archivos HTML", "*.html")])
     if file_path:
         try:
             with open(file_path, 'r') as file:
