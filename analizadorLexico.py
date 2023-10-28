@@ -68,6 +68,8 @@ def armarNumero(cadena,indice):
 
 def extraerTokens(cadena):
     global numCol,numFila
+    numCol=1
+    numFila=1
     tokensCaptados=[]
     arregloErrores=[]
     indice=0
