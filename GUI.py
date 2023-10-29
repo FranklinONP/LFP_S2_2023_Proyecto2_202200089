@@ -4,6 +4,7 @@ from tkinter import ttk
 import webbrowser
 from tkinter import filedialog
 
+
 # Importo los analizadores
 from analizadorLexico import extraerTokens
 from analizadorSintactico import Parser
@@ -49,7 +50,8 @@ def opcion2():
     webbrowser.open(file_path)
 
 def opcion3():
-    print("Opción 3")
+    file_path = "Arbol de derivacion de Franklin Noj.dot.pdf"  
+    webbrowser.open(file_path)
 # Crear una ventana
 
 root = tk.Tk()
