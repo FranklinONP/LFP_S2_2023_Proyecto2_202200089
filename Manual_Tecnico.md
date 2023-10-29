@@ -48,7 +48,7 @@ Esta función analiza caracter por caracter, de una cadena de tesxto que se le p
 
 # Automatas Finitos Deteterministas para el analizador Lexico
 ##### AFD Para capturar numeros
-![archivoSalida](afd numeros.jpg)
+![archivoSalida](https://i.ibb.co/MMyGtLb/afd-numeros.jpg)
 
 AFD
 GRAMATICA {Alfabeto(E),No Terminales,Inicio,Producciones}
@@ -64,8 +64,8 @@ q1-->Nq1|Pq2
 q2-->Nq3
 q3-->Nq3|e
 
-##### AFD Para capturar palabras
-![archivoSalida](afd numeros.jpg)
+##### AFD Para capturar palabras (string)
+![archivoSalida](https://i.ibb.co/NydGkgs/afd-palabras.jpg)
 
 AFD
 GRAMATICA {Alfabeto(E),No Terminales,Inicio,Producciones}
@@ -82,31 +82,42 @@ q2-->Lq3
 q3-->Lq3|Cq4
 q4-->e
 
+# Metodo de arbol para las diferentes funciones del programa
+![archivoSalida](https://i.ibb.co/mN8fT43/arbol-contarsi.jpg)
+![archivoSalida](https://i.ibb.co/tHkr0tX/arbol-conteo.jpg)
+![archivoSalida](https://i.ibb.co/pfLWj9t/arbol-datos.jpg)
+![archivoSalida](https://i.ibb.co/qnxw292/arbol-max.jpg)
+![archivoSalida](https://i.ibb.co/KG9yX5t/arbol-min.jpg)
+![archivoSalida](https://i.ibb.co/rvvGKzY/arbol-promedio.jpg)
+![archivoSalida](https://i.ibb.co/zZGQtmJ/arbol-sumar.jpg)
+
 # Gramatica Independiente del contexto para el analizador Sintactico
+
+```js
 
 INICIO::= LISTA_INSTRUCCIONES
 
-LISTA_INSTRUCCIONES::= -LISTA_INSTRUCCIONES2- |-INSTRUCCION- 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Epsilon
+LISTA_INSTRUCCIONES::= <INSTRUCCION> <LISTA_INSTRUCCIONES2>
+                    | Epsilon
 
-INSTRUCCION ::=  INST_IMPRIMIR INSTRUCCION
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_IMPRIMIRLN -INSTRUCCION-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Epsilon
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-INSTRUCCIONES-
+INSTRUCCION ::=  INST_IMPRIMIR <INSTRUCCION>
+            | INST_IMPRIMIRLN <INSTRUCCION>
+            | Epsilon
+            <INSTRUCCIONES>
 
-INSTRUCCIONES ::= -INST_CLAVES-  -INST_REGISTROS-  
+INSTRUCCIONES ::= <INST_CLAVES> <INST_REGISTROS>  
         
-LISTA_INSTRUCCIONES2 ::= INST_CONTEO -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_PROMEDIO -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_CONTARSI -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_DATOS -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_SUMAR -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_MAX -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_MIN -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_EXTRAERREPORTE -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_IMPRIMIR -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| INST_IMPRIMIRLN -LISTA_INSTRUCCIONES2-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Epsilon
+LISTA_INSTRUCCIONES2 ::= INST_CONTEO <LISTA_INSTRUCCIONES2>
+            | INST_PROMEDIO <LISTA_INSTRUCCIONES2>
+            | INST_CONTARSI <LISTA_INSTRUCCIONES2>
+            | INST_DATOS <LISTA_INSTRUCCIONES2>
+            | INST_SUMAR <LISTA_INSTRUCCIONES2>
+            | INST_MAX <LISTA_INSTRUCCIONES2>
+            | INST_MIN <LISTA_INSTRUCCIONES2>
+            | INST_EXTRAERREPORTE <LISTA_INSTRUCCIONES2>
+            | INST_IMPRIMIR <LISTA_INSTRUCCIONES2>
+            | INST_IMPRIMIRLN <LISTA_INSTRUCCIONES2>
+            | Epsilon
 
 INST_IMPRIMIR ::= imprimir parentesisApetura comillas string comillas parentesisCerradura puntoycoma
 
@@ -132,9 +143,9 @@ INST_MAX ::= max parentesisApetura string parentesisCerradura puntoycoma
 
 INST_MIN ::= min parentesisApetura string parentesisCerradura puntoycoma
 
-INST_EXTRAERREPORTE ::= < extraerReporte> -parentesisApetura- -string-  -parentesisCerradura- -puntoycoma-
+INST_EXTRAERREPORTE ::= < extraerReporte> <parentesisApetura> <string> <parentesisCerradura> <puntoycoma> 
                
-
+```
 <br>
 
 
