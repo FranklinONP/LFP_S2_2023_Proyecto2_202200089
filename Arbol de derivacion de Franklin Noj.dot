@@ -1,4 +1,4 @@
-// Graph20231028-234225
+// Graph20231028-233529
 digraph {
 	node [fillcolor=white fontcolor=red shape=box style=filled]
 	nodo0 [label=Raiz]
@@ -130,7 +130,7 @@ digraph {
 	nodo63 -> nodo64
 	nodo65 [label="Parentesis izquierdo"]
 	nodo63 -> nodo65
-	nodo66 [label="===========ergg==================="]
+	nodo66 [label=" Inicia el TXT "]
 	nodo63 -> nodo66
 	nodo67 [label="Parentesis derecho"]
 	nodo63 -> nodo67
@@ -243,4 +243,117 @@ digraph {
 	nodo113 -> nodo114
 	nodo121 [label="Lista de instrucciones"]
 	nodo113 -> nodo121
+	nodo122 [label=Raiz]
+	nodo123 [label=Instruccion]
+	nodo124 [label="Funcion imprimirln"]
+	nodo123 -> nodo124
+	nodo125 [label=imprimirln]
+	nodo124 -> nodo125
+	nodo126 [label="Parentesis izquierdo"]
+	nodo124 -> nodo126
+	nodo127 [label=" Inicia el TXT "]
+	nodo124 -> nodo127
+	nodo128 [label="Parentesis derecho"]
+	nodo124 -> nodo128
+	nodo129 [label="Punto y coma"]
+	nodo124 -> nodo129
+	nodo122 -> nodo123
+	nodo130 [label="Lista de instrucciones"]
+	nodo122 -> nodo130
+	nodo131 [label="Lista de instrucciones"]
+	nodo130 -> nodo131
+	nodo132 [label="Lista de instrucciones"]
+	nodo131 -> nodo132
+	nodo133 [label=Instruccion]
+	nodo134 [label="Funcion imprimirln"]
+	nodo133 -> nodo134
+	nodo135 [label=imprimirln]
+	nodo134 -> nodo135
+	nodo136 [label="Parentesis izquierdo"]
+	nodo134 -> nodo136
+	nodo137 [label="---Datos--"]
+	nodo134 -> nodo137
+	nodo138 [label="Parentesis derecho"]
+	nodo134 -> nodo138
+	nodo139 [label="Punto y coma"]
+	nodo134 -> nodo139
+	nodo132 -> nodo133
+	nodo140 [label="Lista de instrucciones"]
+	nodo132 -> nodo140
+	nodo141 [label=Instruccion]
+	nodo142 [label="Funcion imprimirln"]
+	nodo141 -> nodo142
+	nodo143 [label=imprimirln]
+	nodo142 -> nodo143
+	nodo144 [label="Parentesis izquierdo"]
+	nodo142 -> nodo144
+	nodo145 [label="---max--"]
+	nodo142 -> nodo145
+	nodo146 [label="Parentesis derecho"]
+	nodo142 -> nodo146
+	nodo147 [label="Punto y coma"]
+	nodo142 -> nodo147
+	nodo140 -> nodo141
+	nodo148 [label="Lista de instrucciones"]
+	nodo140 -> nodo148
+	nodo149 [label="Lista de instrucciones"]
+	nodo148 -> nodo149
+	nodo150 [label="Lista de instrucciones"]
+	nodo149 -> nodo150
+	nodo151 [label=Instruccion]
+	nodo152 [label="Funcion min"]
+	nodo151 -> nodo152
+	nodo153 [label=min]
+	nodo152 -> nodo153
+	nodo154 [label="Parentesis izquierdo"]
+	nodo152 -> nodo154
+	nodo155 [label=stock]
+	nodo152 -> nodo155
+	nodo156 [label="Parentesis derecho"]
+	nodo152 -> nodo156
+	nodo157 [label="Punto y coma"]
+	nodo152 -> nodo157
+	nodo150 -> nodo151
+	nodo158 [label="Lista de instrucciones"]
+	nodo150 -> nodo158
+	nodo159 [label=Instruccion]
+	nodo160 [label="Funcion imprimirln"]
+	nodo159 -> nodo160
+	nodo161 [label=imprimirln]
+	nodo160 -> nodo161
+	nodo162 [label="Parentesis izquierdo"]
+	nodo160 -> nodo162
+	nodo163 [label="---max---"]
+	nodo160 -> nodo163
+	nodo164 [label="Parentesis derecho"]
+	nodo160 -> nodo164
+	nodo165 [label="Punto y coma"]
+	nodo160 -> nodo165
+	nodo158 -> nodo159
+	nodo166 [label="Lista de instrucciones"]
+	nodo158 -> nodo166
+	nodo167 [label="Lista de instrucciones"]
+	nodo166 -> nodo167
+	nodo168 [label="Lista de instrucciones"]
+	nodo167 -> nodo168
+	nodo169 [label="Lista de instrucciones"]
+	nodo168 -> nodo169
+	nodo170 [label="Lista de instrucciones"]
+	nodo169 -> nodo170
+	nodo171 [label=Instruccion]
+	nodo172 [label="Funcion sumar"]
+	nodo171 -> nodo172
+	nodo173 [label=sumar]
+	nodo172 -> nodo173
+	nodo174 [label="Parentesis izquierdo"]
+	nodo172 -> nodo174
+	nodo175 [label=stock]
+	nodo172 -> nodo175
+	nodo176 [label="Parentesis derecho"]
+	nodo172 -> nodo176
+	nodo177 [label="Punto y coma"]
+	nodo172 -> nodo177
+	nodo170 -> nodo171
+	nodo178 [label="Lista de instrucciones"]
+	nodo170 -> nodo178
 }

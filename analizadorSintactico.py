@@ -1,5 +1,5 @@
 #aqui como se construye el sintactico
-from print import printer
+from datosConsola import printer
 from Base_de_Datos import BASEDATOS
 from Errores import Errores
 from arbol_derivacion import *
