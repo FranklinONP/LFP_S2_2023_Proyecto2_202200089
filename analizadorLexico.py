@@ -13,6 +13,7 @@ Palabras_Reservadas={
     'Claves':'CLAVES',
     'claves':'CLAVES',
     'Registros':'REGISTROS',
+    'registros':'REGISTROS',
     'imprimirln':'IMPRIMIRLN',
     'conteo':'CONTEO',
     'promedio':'PROMEDIO',
@@ -90,30 +91,34 @@ def extraerTokens(cadena):
                 cadena=cadena[4:]   
         elif caracter=='#': #Para comentario de una linea
             ii=1
-            while indice<len(cadena) and cadena[0]!='\n':
-                ii+=1
-                cadena=cadena[1:]
+            while cadena and cadena[0] != '\n':
+                ii += 1
+                cadena = cadena[1:]
             numCol=1
             numFila+=1
             cadena=cadena[1:]
         #No estoy Seguro================================================================================================
         
-        elif caracter=='"' and cadena[indice+1]=='"' and cadena[indice+2]=='"':
+        elif caracter=='"' and cadena[1]=='"' and cadena[2]=='"':
             #indice+=3
             cadena=cadena[3:]
             caracter=cadena[0]
             while True:
-                if caracter=='"' and cadena[indice+1]=='"' and cadena[indice+2]=='"':
+                if caracter=='"' and cadena[1]=='"' and cadena[2]=='"':
+                    cadena=cadena[3:]
+                    caracter=cadena[0]
                     break
-                if caracter=='\n':
+                elif caracter=='\n':
                     numCol=1
                     numFila+=1
                     cadena=cadena[1:]
                     caracter=cadena[0]
-                indice+=1
-                numCol+=1
-                cadena=cadena[3:]
-                caracter=cadena[0]
+                else:
+                    cadena=cadena[1:]
+                    caracter=cadena[0]
+                    numCol+=1
+            print(" ")
+            print(" ")
             #indice+=1
         elif caracter=="'" and cadena[1]=="'" and cadena[2]=="'":
             #indice+=3
@@ -121,16 +126,20 @@ def extraerTokens(cadena):
             caracter=cadena[0]
             while True:
                 if caracter=="'" and cadena[1]=="'" and cadena[2]=="'":
+                    cadena=cadena[3:]
+                    caracter=cadena[0]
                     break
-                if caracter=='\n':
+                elif caracter=='\n':
                     numCol=1
                     numFila+=1
                     cadena=cadena[1:]
-                indice+=1
-                numCol+=1
-                cadena=cadena[1:]
-                caracter=cadena[0]
-            cadena=cadena[3:]
+                    caracter=cadena[0]
+                else:
+                    cadena=cadena[1:]
+                    caracter=cadena[0]
+                    numCol+=1
+            print(" ")
+            print(" ")
             #indice+=1
         #No estoy Seguro================================================================================================
         elif caracter=='"':
@@ -160,7 +169,7 @@ def extraerTokens(cadena):
         elif caracter.isdigit():
             numerito,pos=armarNumero(cadena[indice:],0)
             numCol+=pos+1                               #duda///////////////////////////////////////
-            #indice+=pos
+
             cadena=cadena[pos:]
             token=tokenG("Numero",numerito,numFila,numCol)
             tokensCaptados.append(token)
@@ -169,12 +178,12 @@ def extraerTokens(cadena):
             numCol+=1
             token=tokenG(Palabras_Reservadas[caracter],caracter,numFila,numCol)
             tokensCaptados.append(token)
-            #indice+=1
+
             cadena=cadena[1:]
         else:
             error=objetoError(caracter,'Lexico',numFila,numCol)
             arregloErrores.append(error)
-            #indice+=1
+
             cadena=cadena[1:]
             numCol+=1
         if not cadena:
